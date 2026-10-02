@@ -1,12 +1,16 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_EXE = 'C:\\Users\\TANISHQ JOSHI\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe'
+    }
+
     stages {
 
         stage('Environment Check') {
             steps {
                 bat 'python --version'
-                bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" --version'
+                bat '"%DOCKER_EXE%" --version'
             }
         }
 
@@ -19,8 +23,8 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" build -t student-task-tracker:%BUILD_NUMBER% .'
-                bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" tag student-task-tracker:%BUILD_NUMBER% student-task-tracker:latest'
+                bat '"%DOCKER_EXE%" build -t student-task-tracker:%BUILD_NUMBER% .'
+                bat '"%DOCKER_EXE%" tag student-task-tracker:%BUILD_NUMBER% student-task-tracker:latest'
             }
         }
     }
