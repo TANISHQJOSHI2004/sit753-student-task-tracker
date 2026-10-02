@@ -21,6 +21,18 @@ pipeline {
             }
         }
 
+        stage('Code Quality') {
+            steps {
+                withCredentials([string(
+                    credentialsId: 'sonarqube-token',
+                    variable: 'SONAR_TOKEN'
+                )]) {
+                    bat 'python -m pip install pysonar'
+                    bat 'pysonar --sonar-host-url=http://localhost:9000 --sonar-token=%SONAR_TOKEN% --sonar-project-key=sit753-student-task-tracker'
+                }
+            }
+        }
+
         stage('Build') {
             steps {
                 bat '"%DOCKER_EXE%" build -t student-task-tracker:%BUILD_NUMBER% .'
