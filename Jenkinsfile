@@ -17,7 +17,7 @@ pipeline {
 
                 echo 'Building versioned Docker image...'
 
-                bat '"%DOCKER_EXE%" build -t student-task-tracker:%BUILD_NUMBER% .'
+                bat '"%DOCKER_EXE%" build --pull -t student-task-tracker:%BUILD_NUMBER% .'
 
                 bat '"%DOCKER_EXE%" tag student-task-tracker:%BUILD_NUMBER% student-task-tracker:latest'
             }
