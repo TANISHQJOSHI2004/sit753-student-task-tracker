@@ -17,7 +17,7 @@ pipeline {
         stage('Test') {
             steps {
                 bat 'python -m pip install -r requirements.txt'
-                bat 'python -m pytest -v'
+                bat 'python -m pytest --cov=app --cov-report=xml:coverage.xml -v'
             }
         }
 
@@ -28,7 +28,7 @@ pipeline {
                     variable: 'SONAR_TOKEN'
                 )]) {
                     bat 'python -m pip install pysonar'
-                    bat 'pysonar --sonar-host-url=http://localhost:9000 --sonar-token=%SONAR_TOKEN% --sonar-project-key=sit753-student-task-tracker'
+                    bat 'pysonar --sonar-host-url=http://localhost:9000 --sonar-token=%SONAR_TOKEN% --sonar-project-key=sit753-student-task-tracker --sonar-python-version=3.12 --sonar-python-coverage-report-paths=coverage.xml'
                 }
             }
         }
