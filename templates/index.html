@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Task Tracker</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .task-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        input,
+        select,
+        button {
+            padding: 10px;
+            margin: 5px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .task {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+        .actions a {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Student Task Tracker</h1>
+
+    <div class="task-form">
+
+        <h2>Add Assessment Task</h2>
+
+        <form method="POST" action="/add">
+
+            <input
+                type="text"
+                name="subject"
+                placeholder="Subject e.g. SIT753"
+                required
+            >
+
+            <input
+                type="text"
+                name="title"
+                placeholder="Task title"
+                required
+            >
+
+            <input
+                type="date"
+                name="due_date"
+                required
+            >
+
+            <select name="priority">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+
+            <button type="submit">
+                Add Task
+            </button>
+
+        </form>
+
+    </div>
+
+    <h2>My Tasks</h2>
+
+    {% if tasks %}
+
+        {% for task in tasks %}
+
+            <div class="task">
+
+                <div class="{% if task.completed %}completed{% endif %}">
+
+                    <strong>{{ task.subject }}</strong>
+
+                    <h3>{{ task.title }}</h3>
+
+                    <p>Due: {{ task.due_date }}</p>
+
+                    <p>Priority: {{ task.priority }}</p>
+
+                    <p>
+                        Status:
+                        {% if task.completed %}
+                            Completed
+                        {% else %}
+                            In Progress
+                        {% endif %}
+                    </p>
+
+                </div>
+
+                <div class="actions">
+
+                    <a href="/complete/{{ task.id }}">
+                        {% if task.completed %}
+                            Mark Incomplete
+                        {% else %}
+                            Complete
+                        {% endif %}
+                    </a>
+
+                    <a href="/delete/{{ task.id }}">
+                        Delete
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>No tasks have been added yet.</p>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
