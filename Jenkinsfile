@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         DOCKER_EXE = 'C:\\Users\\TANISHQ JOSHI\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe'
-        TRIVY_EXE  = 'C:\\Tools\\Trivy\\trivy.exe'
-        APP_NAME   = 'student-task-tracker'
+        TRIVY_EXE = 'C:\\Tools\\Trivy\\trivy.exe'
+        APP_NAME = 'student-task-tracker'
         CONTAINER_NAME = 'student-task-tracker-app'
     }
 
@@ -134,13 +134,18 @@ pipeline {
                 echo 'Creating release metadata...'
 
                 bat '''
-                echo Application=Student Task Tracker> release-info.txt
-                echo Build=%BUILD_NUMBER%>> release-info.txt
-                echo Image=%APP_NAME%:release-%BUILD_NUMBER%>> release-info.txt
-                echo GitCommit=%GIT_COMMIT%>> release-info.txt
+                @echo off
+                (
+                echo Application=Student Task Tracker
+                echo Build=%BUILD_NUMBER%
+                echo Image=%APP_NAME%:release-%BUILD_NUMBER%
+                echo GitCommit=%GIT_COMMIT%
+                ) > release-info.txt
                 '''
 
                 echo 'Release created successfully.'
+
+                bat 'type release-info.txt'
             }
 
             post {
@@ -177,6 +182,7 @@ pipeline {
     }
 
     post {
+
         success {
             echo '=============================================='
             echo 'CI/CD PIPELINE COMPLETED SUCCESSFULLY'
