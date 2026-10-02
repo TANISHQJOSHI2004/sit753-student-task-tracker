@@ -6,7 +6,7 @@ pipeline {
         stage('Environment Check') {
             steps {
                 bat 'python --version'
-                bat 'docker --version'
+                bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" --version'
             }
         }
 
@@ -19,8 +19,8 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'docker build -t student-task-tracker:%BUILD_NUMBER% .'
-                bat 'docker tag student-task-tracker:%BUILD_NUMBER% student-task-tracker:latest'
+                bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" build -t student-task-tracker:%BUILD_NUMBER% .'
+                bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" tag student-task-tracker:%BUILD_NUMBER% student-task-tracker:latest'
             }
         }
     }
