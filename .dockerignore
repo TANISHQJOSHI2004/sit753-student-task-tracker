@@ -6,3 +6,7 @@ __pycache__
 instance
 *.db
 .env
+coverage.xml
+.sonar
+bandit-report.json
+trivy-report.json
